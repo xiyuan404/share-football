@@ -1,0 +1,1 @@
+exports.NAME_AND_PASSWORD_IS_REQUIRE = 'name_and_password_is_require'
