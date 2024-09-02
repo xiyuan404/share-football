@@ -5,7 +5,10 @@ const {
   PASSWORD_IS_INCORRECT,
 } = require('../error/errorType')
 const userService = require('../service/user.service')
-const { passwordEncrypt, passwordDecrypt } = require('../utils/passwordHandler')
+const {
+  passwordEncrypt,
+  passwordDecrypt,
+} = require('../utils/passwordHandlers')
 
 const verifyLogin = async (ctx, next) => {
   const { username, password } = ctx.request.body

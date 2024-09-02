@@ -16,6 +16,12 @@ class UserService {
       console.log('register', err)
     }
   }
+
+  async updateUserAmount(amount, id) {
+    const statement = 'UPDATE `user` SET AMOUNT = ? WHERE id = ?;'
+    const [result] = await connection.execute(statement, [amount, id])
+    return result
+  }
 }
 
 module.exports = new UserService()

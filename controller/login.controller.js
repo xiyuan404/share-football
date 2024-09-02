@@ -1,4 +1,4 @@
-const { tokenGenerate } = require('../utils/tokenHandler')
+const { tokenGenerate } = require('../utils/tokenHandlers')
 
 class LoginController {
   async login(ctx) {

@@ -1,5 +1,5 @@
 const userService = require('../service/user.service')
-const { passwordEncrypt } = require('../utils/passwordHandler')
+const { passwordEncrypt } = require('../utils/passwordHandlers')
 
 class RegisterController {
   async register(ctx) {
