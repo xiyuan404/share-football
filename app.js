@@ -5,6 +5,8 @@ const logger = require('koa-logger')
 
 const errorHandler = require('./error')
 const stadiumRouter = require('./router/stadium.router')
+const registerRouter = require('./router/register.router')
+const loginRouter = require('./router/login.router')
 
 // 创建app实例
 const app = new Koa()
@@ -14,8 +16,13 @@ app.use(bodyParser())
 app.use(staticServer('static'))
 app.use(logger())
 
+// 注册路由
 app.use(stadiumRouter.routes())
 app.use(stadiumRouter.allowedMethods())
+app.use(registerRouter.routes())
+app.use(registerRouter.allowedMethods())
+app.use(loginRouter.routes())
+app.use(loginRouter.allowedMethods())
 
 app.on('error', errorHandler)
 
