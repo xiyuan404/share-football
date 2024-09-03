@@ -1,3 +1,4 @@
+const { wrapperMiddleware } = require('../middleware/wrapper.middleware')
 const {
   NAME_AND_PASSWORD_IS_REQUIRE,
   USER_NAME_IS_EXIST,
@@ -14,7 +15,7 @@ const {
   FILE_IS_NOT_FOUND,
 } = require('./errorType')
 
-function errorHandler(err, ctx) {
+async function errorHandler(err, ctx) {
   let status = 200
   let message = 'success'
   switch (err.message) {
@@ -75,6 +76,7 @@ function errorHandler(err, ctx) {
   }
   ctx.status = status
   ctx.message = message
+  await wrapperMiddleware(ctx)
 }
 
 module.exports = errorHandler

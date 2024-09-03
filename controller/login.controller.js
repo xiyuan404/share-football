@@ -1,7 +1,7 @@
 const { tokenGenerate } = require('../utils/tokenHandlers')
 
 class LoginController {
-  async login(ctx) {
+  async login(ctx, next) {
     const { userInfo } = ctx
 
     const { id, name, amount } = userInfo
@@ -12,6 +12,7 @@ class LoginController {
       amount,
       token,
     }
+    await next()
   }
 }
 

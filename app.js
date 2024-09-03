@@ -13,6 +13,7 @@ const orderRouter = require('./router/order.router')
 const questionRouter = require('./router/question.router')
 const uploadRouter = require('./router/upload.router')
 const fileRouter = require('./router/file.router')
+const { wrapperMiddleware } = require('./middleware/wrapper.middleware')
 
 // 创建app实例
 const app = new Koa()
@@ -41,6 +42,8 @@ app.use(uploadRouter.routes())
 app.use(uploadRouter.allowedMethods())
 app.use(fileRouter.routes())
 app.use(fileRouter.allowedMethods())
+
+app.use(wrapperMiddleware)
 
 app.on('error', errorHandler)
 
