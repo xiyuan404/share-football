@@ -8,6 +8,8 @@ const {
   CDKEY_IS_INVALID,
   CDKEY_IS_MISSING,
   AMOUNT_IS_INVALID,
+  STADIUM_ID_IS_REQUIRED,
+  ORDER_NO_IS_INVALID,
 } = require('./errorType')
 
 function errorHandler(err, ctx) {
@@ -43,12 +45,20 @@ function errorHandler(err, ctx) {
       message = AMOUNT_IS_INVALID
       break
     case CDKEY_IS_MISSING:
-      status = 401
+      status = 400
       message = CDKEY_IS_MISSING
       break
     case CDKEY_IS_INVALID:
-      status = 403
+      status = 400
       message = CDKEY_IS_INVALID
+      break
+    case STADIUM_ID_IS_REQUIRED:
+      status = 400
+      message = STADIUM_ID_IS_REQUIRED
+      break
+    case ORDER_NO_IS_INVALID:
+      status = 400
+      message = ORDER_NO_IS_INVALID
       break
     default:
       break
