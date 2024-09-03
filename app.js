@@ -8,6 +8,7 @@ const stadiumRouter = require('./router/stadium.router')
 const registerRouter = require('./router/register.router')
 const loginRouter = require('./router/login.router')
 const rechargeRouter = require('./router/recharge.router')
+const cdkeyRouter = require('./router/cdkey.router')
 
 // 创建app实例
 const app = new Koa()
@@ -26,6 +27,8 @@ app.use(loginRouter.routes())
 app.use(loginRouter.allowedMethods())
 app.use(rechargeRouter.routes())
 app.use(rechargeRouter.allowedMethods())
+app.use(cdkeyRouter.routes())
+app.use(cdkeyRouter.allowedMethods())
 
 app.on('error', errorHandler)
 

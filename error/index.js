@@ -5,6 +5,8 @@ const {
   PASSWORD_IS_INCORRECT,
   TOKEN_IS_INVALID,
   TOKEN_IS_MISSING,
+  CDKEY_IS_INVALID,
+  CDKEY_IS_MISSING,
   AMOUNT_IS_INVALID,
 } = require('./errorType')
 
@@ -39,6 +41,14 @@ function errorHandler(err, ctx) {
     case AMOUNT_IS_INVALID:
       status = 400
       message = AMOUNT_IS_INVALID
+      break
+    case CDKEY_IS_MISSING:
+      status = 401
+      message = CDKEY_IS_MISSING
+      break
+    case CDKEY_IS_INVALID:
+      status = 403
+      message = CDKEY_IS_INVALID
       break
     default:
       break
