@@ -10,6 +10,8 @@ const {
   AMOUNT_IS_INVALID,
   STADIUM_ID_IS_REQUIRED,
   ORDER_NO_IS_INVALID,
+  FILE_IS_REQUIRED,
+  FILE_IS_NOT_FOUND,
 } = require('./errorType')
 
 function errorHandler(err, ctx) {
@@ -59,6 +61,14 @@ function errorHandler(err, ctx) {
     case ORDER_NO_IS_INVALID:
       status = 400
       message = ORDER_NO_IS_INVALID
+      break
+    case FILE_IS_REQUIRED:
+      status = 400
+      message = FILE_IS_REQUIRED
+      break
+    case FILE_IS_NOT_FOUND:
+      status = 400
+      message = FILE_IS_NOT_FOUND
       break
     default:
       break

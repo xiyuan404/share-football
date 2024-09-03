@@ -18,8 +18,13 @@ class UserService {
   }
 
   async updateUserAmount(amount, id) {
-    const statement = 'UPDATE `user` SET AMOUNT = ? WHERE id = ?;'
+    const statement = 'UPDATE `user` SET amount = ? WHERE id = ?;'
     const [result] = await connection.execute(statement, [amount, id])
+    return result
+  }
+  async updateUserAvatar(avatar, id) {
+    const statement = 'UPDATE `user` SET avatar = ? WHERE id = ?;'
+    const [result] = await connection.execute(statement, [avatar, id])
     return result
   }
 }
