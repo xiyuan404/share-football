@@ -8,7 +8,7 @@ const groundInfo = ref({})
 onLoad((opts) => {
 	// 接收首页传递的场馆详情唯一标识
 	// console.log(opts)
-	groundInfo.value = getGroundInfoById(1)
+	groundInfo.value = getGroundInfoById(+opts.id)
 	console.log(groundInfo.value)
 })
 

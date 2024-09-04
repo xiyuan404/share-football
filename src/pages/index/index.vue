@@ -6,7 +6,7 @@ import { markers } from '../../pages-data'
 const longitude = ref(0)
 const latitude = ref(0)
 const currMarker = ref(null)
-const isScan = ref(false)
+const isScan = ref(true)
 
 onLoad(() => {
 	uni.getLocation({
@@ -31,7 +31,7 @@ const handleMarkerTap = (e) => {
 }
 const handleMapTap = (e) => {
 	console.log('MapTap fired: ', e)
-	// isScan.value = true
+	isScan.value = true
 }
 
 // 设备API(扫码功能)调用
