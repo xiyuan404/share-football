@@ -1,5 +1,16 @@
 <script setup>
-import { contactQuestion } from '../../pages-data'
+import { onLoad } from '@dcloudio/uni-app'
+// import { contactQuestion } from '../../pages-data'
+import { ref } from 'vue'
+import api from '../../api'
+
+const contactQuestion = ref([])
+const app = new App()
+onLoad((otps) => {
+	api.getQuestionList((res) => {
+		app.globalData.questions = contaceQuestions.value = res.data
+	})
+})
 
 const handleItemTap = (item) => {
 	console.log('item Tap fired: ', item)

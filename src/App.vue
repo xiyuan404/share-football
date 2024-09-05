@@ -1,5 +1,11 @@
 <script>
 export default {
+	globalData: {
+		markers: [],
+		questions: [],
+		token: uni.getStorageSync('token') || null,
+		userInfo: uni.getStorageSync('userInfo') || { name: '', avatar: '', amount: 0 },
+	},
 	onLaunch: function () {
 		console.log('App Launch')
 	},

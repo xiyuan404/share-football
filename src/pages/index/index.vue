@@ -1,13 +1,16 @@
 <script setup>
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
-import { markers } from '../../pages-data'
+// import { markers } from '../../pages-data'
+import api from '../../api'
 
 const longitude = ref(0)
 const latitude = ref(0)
 const currMarker = ref(null)
 const isScan = ref(true)
 
+const markers = ref([])
+const app = getApp()
 onLoad(() => {
 	uni.getLocation({
 		geocode: true,
@@ -20,18 +23,33 @@ onLoad(() => {
 			console.log(err)
 		},
 	})
+
+	api.getStadiumList().then((res) => {
+		console.log('stadium list: ', res.data)
+		app.globalData.markers = markers.value = res.data.map((item) => {
+			return {
+				...item,
+				width: 40,
+				height: 40,
+				iconPath: '/static/icon.png',
+				latitude: +item.latitude,
+				longitude: +item.longitude,
+				title: item.name,
+			}
+		})
+	})
 })
 
 const handleMarkerTap = (e) => {
 	console.log('MarkerTap fired: ', e.detail)
-	const markerInfo = markers.find((marker) => marker.id === e.detail.markerId)
+	const markerInfo = markers.value.find((marker) => marker.id === e.detail.markerId)
 	console.log('markerInfo', markerInfo)
 	currMarker.value = markerInfo
 	isScan.value = false
 }
 const handleMapTap = (e) => {
 	console.log('MapTap fired: ', e)
-	isScan.value = true
+	// isScan.value = true
 }
 
 // 设备API(扫码功能)调用
@@ -87,6 +105,20 @@ const handleImgTap = (item) => {
 			mapContext.moveToLocation()
 			break
 		case 4:
+			// 个人中心登录校验
+			if (!app.globalData.token) {
+				uni.showModal({
+					title: '尚未登录，点击登录？',
+					success(res) {
+						if (res.confirm) {
+							uni.navigateTo({
+								url: '/pages/login/login',
+							})
+						}
+					},
+				})
+				return
+			}
 			uni.navigateTo({
 				url: '/pages/profile/profile',
 			})

@@ -1,23 +1,25 @@
 <script setup>
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
-import { getGroundInfoById } from '../../pages-data'
+// import { getGroundInfoById } from '../../pages-data'
 
 const groundInfo = ref({})
 
+const app = getApp()
 onLoad((opts) => {
 	// 接收首页传递的场馆详情唯一标识
 	// console.log(opts)
-	groundInfo.value = getGroundInfoById(+opts.id)
-	console.log(groundInfo.value)
+	// groundInfo.value = getGroundInfoById(+opts.id)
+	groundInfo.value = app.globalData.markers.find((marker) => marker.id === +opts.id)
+	console.log('ground data: ', groundInfo.value)
 })
 
 const handleTap = (e) => {
 	uni.openLocation({
-		longitude: groundInfo.value.marker.longitude,
-		latitude: groundInfo.value.marker.latitude,
-		name: groundInfo.value.marker.title,
-		address: groundInfo.value.marker.address,
+		longitude: groundInfo.value.longitude,
+		latitude: groundInfo.value.latitude,
+		name: groundInfo.value.title,
+		address: groundInfo.value.address,
 		success(res) {
 			console.log('openLocation success: ', res)
 		},
@@ -58,7 +60,7 @@ const handleTap = (e) => {
 				<image src="/static/hot.png" mode="widthFix"></image>
 			</view>
 			<view class="ground-detail-center">
-				<text>营业时间:周一到周日 {{ groundInfo?.startTime }} - {{ groundInfo?.endTime }}</text>
+				<text>营业时间: {{ groundInfo?.startTime }} - {{ groundInfo?.endTime }}</text>
 			</view>
 			<view class="ground-detail-right"></view>
 		</view>

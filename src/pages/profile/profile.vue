@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
-const isLogin = ref(false)
+
+const app = getApp()
 
 // 个人中心功能列表
 const list = [
@@ -94,21 +95,24 @@ const handleItemTap = (item) => {
 	}
 }
 
-const handleLogin = () => {
-	uni.navigateTo({
-		url: '/pages/login/login',
-	})
+const handleAvatarChoose = (e) => {
+	app.globalData.userInfo.avatar = e.detial.avatarUrl
 }
 </script>
 
 <template>
 	<view class="profile-box">
 		<view class="profile-top">
-			<view v-if="isLogin" class="profile-user">
-				<image class="user-avatar" src="/static/batman.png" mode="scaleToFill"></image>
-				<view class="user-nickname ellipsis">随机随机随机随机随机随机随机随机</view>
+			<view class="profile-user">
+				<button open-type="chooseAvatar" class="user-avatar-button" @chooseavatar="handleAvatarChoose">
+					<image
+						class="user-avatar-img"
+						:src="app.globalData.userInfo.avatar || '/static/batman.png'"
+						mode="widthFix"
+					></image>
+				</button>
+				<view class="user-nickname ellipsis">app.globalData.userInfo.name || '-'</view>
 			</view>
-			<button v-else class="button" @tap="handleLogin">点击登录</button>
 		</view>
 		<view class="profile-bottom">
 			<view class="item" v-for="item in list" :key="list.id">
@@ -143,11 +147,17 @@ page {
 	display: flex;
 }
 
-.user-avatar {
+.user-avatar-img {
+	width: 100%;
+	height: 100%;
+}
+
+.user-avatar-button {
 	width: 120rpx;
 	height: 120rpx;
-	border-radius: 50%;
+	padding: 0;
 	margin: 0 20rpx;
+	border-radius: 50%;
 }
 
 .user-nickname {
