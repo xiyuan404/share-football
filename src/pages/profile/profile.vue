@@ -1,7 +1,9 @@
 <script setup>
 import { ref } from 'vue'
+import { uploader } from '../../upload'
 
 const app = getApp()
+const avatar = ref(app.globalData.userInfo.avatar)
 
 // 个人中心功能列表
 const list = [
@@ -96,7 +98,9 @@ const handleItemTap = (item) => {
 }
 
 const handleAvatarChoose = (e) => {
-	app.globalData.userInfo.avatar = e.detial.avatarUrl
+	console.log('choose avatar: ', e)
+	app.globalData.userInfo.avatar = avatar.value = e.detail.avatarUrl
+	uploader.uploadAvatar(e.detail.avatarUrl)
 }
 </script>
 
@@ -105,11 +109,7 @@ const handleAvatarChoose = (e) => {
 		<view class="profile-top">
 			<view class="profile-user">
 				<button open-type="chooseAvatar" class="user-avatar-button" @chooseavatar="handleAvatarChoose">
-					<image
-						class="user-avatar-img"
-						:src="app.globalData.userInfo.avatar || '/static/batman.png'"
-						mode="widthFix"
-					></image>
+					<image class="user-avatar-img" :src="avatar" mode="widthFix"></image>
 				</button>
 				<view class="user-nickname ellipsis">app.globalData.userInfo.name || '-'</view>
 			</view>

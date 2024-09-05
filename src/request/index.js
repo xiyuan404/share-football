@@ -18,7 +18,7 @@ class Request {
 					if (res.data && !res.data.errCode) {
 						resolve(res.data)
 					} else {
-						reject(data.message)
+						reject(res.data.message)
 					}
 				},
 				fail(err) {

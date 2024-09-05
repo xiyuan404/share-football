@@ -1,16 +1,10 @@
 <script setup>
 import { ref } from 'vue'
+import api from '../../api'
 
-const avatar = ref('')
 const nickname = ref('')
 const password = ref('')
 const toLogin = ref(true)
-
-const handleAvatarChoose = (e) => {
-	console.log('AvatarChoose fired: ', e)
-	// 获取的头像地址替换初始头像地址
-	avatar.value = e.detail.avatarUrl
-}
 
 const handleNicknameChange = (e) => {
 	console.log('NicknameChange fired', e)
@@ -21,12 +15,53 @@ const handlePasswordChange = (e) => {
 	password.value = e.detail.value
 }
 
+const app = getApp()
 const handleSubmit = () => {
-	console.log('onSubmit', {
-		nickname: nickname.value,
-		avatar: avatar.value,
+	const dto = {
+		username: nickname.value,
 		password: password.value,
-	})
+	}
+	if (toLogin.value) {
+		api.login(dto).then(
+			(res) => {
+				app.globalData.userInfo = res.data
+				app.globalData.token = res.data.token
+				uni.setStorage({
+					key: 'userInfo',
+					data: res.data,
+				})
+				uni.setStorage({
+					key: 'token',
+					data: res.data.token,
+				})
+				uni.redirectTo({
+					url: '/pages/profile/profile',
+				})
+			},
+			(err) => {
+				uni.showToast({
+					title: err,
+					icon: 'none',
+					mask: true,
+				})
+			}
+		)
+	} else {
+		api.register(dto).then(
+			(res) => {
+				uni.showToast({
+					title: '注册成功',
+					icon: 'none',
+				})
+			},
+			(err) => {
+				uni.showToast({
+					title: err,
+					icon: 'none',
+				})
+			}
+		)
+	}
 }
 
 const handleLoginToggle = () => {
@@ -35,9 +70,6 @@ const handleLoginToggle = () => {
 </script>
 
 <template>
-	<!-- <button open-type="chooseAvatar" class="login-button" @chooseavatar="handleAvatarChoose">
-		<image class="login-avatar" :src="avatar" mode="widthFix"></image>
-	</button> -->
 	<view class="login-box">
 		<view class="login-info">
 			<view class="login-label">用户名</view>
