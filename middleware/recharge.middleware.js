@@ -5,13 +5,14 @@ const verifyRecharge = async (ctx, next) => {
   // dto字段校验
   const { amount } = ctx.request.body
   const { id } = ctx.userInfo
+  console.log(amount)
 
   // 没传missing或字段错了amount1 -> undefined
   if (!amount) {
     return ctx.app.emit('error', new Error(AMOUNT_IS_INVALID), ctx)
   }
 
-  const status = Math.round(Math.random())
+  const status = 1
   const orderNo = orderNoGenerate()
   ctx.rechargeInfo = {
     orderNo,

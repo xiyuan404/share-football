@@ -9,10 +9,10 @@ class UploadController {
     const result = await uploadService.insertFile(filename, mimetype, size, id)
     if (result.insertId) {
       //https://xxx.com/xx.png
-      const avatar = `${APP_HOST}:${APP_PORT}/file/${filename}`
+      const avatar = `http://${APP_HOST}:${APP_PORT}/file/${filename}`
       await userService.updateUserAvatar(avatar, id)
     }
-    ctx.body = '上传成功'
+    ctx.body = '头像上传成功'
   }
 }
 
