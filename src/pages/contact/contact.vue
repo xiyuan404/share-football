@@ -4,18 +4,48 @@ import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 import api from '../../api'
 
-const contactQuestion = ref([])
-const app = new App()
+const contactQuestions = ref([])
+const app = getApp()
+
 onLoad((otps) => {
-	api.getQuestionList((res) => {
-		app.globalData.questions = contaceQuestions.value = res.data
+	api.getQuestionList().then((res) => {
+		app.globalData.questions = contactQuestions.value = res.data.map((i) => {
+			let src = ''
+			switch (i.id) {
+				case 1:
+					src = '/static/flow.png'
+					break
+				case 2:
+					src = '/static/machine.png'
+					break
+				case 3:
+					src = '/static/deposit.png'
+					break
+				case 4:
+					src = '/static/order.png'
+					break
+				case 5:
+					src = '/static/repair.png'
+					break
+				case 6:
+					src = '/static/more.png'
+					break
+				default:
+					break
+			}
+
+			return {
+				...i,
+				src,
+			}
+		})
 	})
 })
 
 const handleItemTap = (item) => {
 	console.log('item Tap fired: ', item)
 	uni.navigateTo({
-		url: `/pages/question/question?type=${item.type}`,
+		url: `/pages/question/question?type=${item.id}`,
 	})
 }
 
@@ -43,7 +73,7 @@ const handleCallTap = (e) => {
 		<view class="contact-bottom">
 			<view class="contact-bottom-title">常见问题</view>
 			<view class="contact-bottom-list">
-				<view class="item" v-for="item in contactQuestion" :key="item.id" @tap="handleItemTap(item)">
+				<view class="item" v-for="item in contactQuestions" :key="item.id" @tap="handleItemTap(item)">
 					<image :src="item.src" mode="widthFix"></image>
 					<text>{{ item.name }}</text>
 				</view>

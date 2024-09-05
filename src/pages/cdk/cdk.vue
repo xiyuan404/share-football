@@ -9,7 +9,7 @@ const handleExchange = () => {
 			title: '兑换码不能为空',
 		})
 	}
-	api.cdkeyExchange(code).then(
+	api.cdkeyExchange({ code: code.value }).then(
 		(res) => {
 			uni.showToast({
 				title: '兑换成功',
@@ -28,7 +28,7 @@ const handleExchange = () => {
 
 <template>
 	<view class="cdk-box">
-		<input v-model="code" type="number" :maxlength="10" class="cdk-input" placeholder="请输入你的cdk" />
+		<input v-model="code" type="number" class="cdk-input" placeholder="请输入你的cdk" />
 		<button class="button" @tap="handleExchange">兑换</button>
 	</view>
 </template>

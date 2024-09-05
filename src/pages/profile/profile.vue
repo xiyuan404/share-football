@@ -111,7 +111,7 @@ const handleAvatarChoose = (e) => {
 				<button open-type="chooseAvatar" class="user-avatar-button" @chooseavatar="handleAvatarChoose">
 					<image class="user-avatar-img" :src="avatar" mode="widthFix"></image>
 				</button>
-				<view class="user-nickname ellipsis">app.globalData.userInfo.name || '-'</view>
+				<view class="user-nickname ellipsis">{{ app.globalData.userInfo.name || '-' }}</view>
 			</view>
 		</view>
 		<view class="profile-bottom">

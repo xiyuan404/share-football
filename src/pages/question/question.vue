@@ -1,13 +1,13 @@
 <script setup>
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
-import { getContactQuestionByType } from '../../pages-data'
 const list = ref([])
 
+const app = getApp()
 onLoad((opts) => {
 	const type = +opts.type || 1
 	if (type) {
-		list.value = getContactQuestionByType(type)
+		list.value = app.globalData.questions.find((i) => i.id === +opts.type).detail
 	}
 })
 </script>
@@ -17,7 +17,7 @@ onLoad((opts) => {
 		<view v-for="(item, index) in list" :key="item.id">
 			<view class="question-title">{{ index + 1 }}. {{ item.title }}</view>
 			<view class="question-desc">
-				{{ item.desc }}
+				{{ item.answer }}
 			</view>
 		</view>
 	</view>

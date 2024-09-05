@@ -32,7 +32,7 @@ const handleTap = (e) => {
 
 <template>
 	<view class="ground-box">
-		<image :src="groundInfo.imgUrl" mode="widthFix" class="ground-img"></image>
+		<image :src="groundInfo.imgUrl || '/static/football-ground.jpeg'" mode="widthFix" class="ground-img"></image>
 		<view class="ground-title">{{ groundInfo?.title }}</view>
 		<view class="ground-detail">
 			<view class="ground-detail-left">
