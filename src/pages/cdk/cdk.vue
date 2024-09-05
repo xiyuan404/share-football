@@ -1,8 +1,28 @@
 <script setup>
 import { ref } from 'vue'
+import api from '../../api'
+
 const code = ref('')
 const handleExchange = () => {
-	console.log('exchangecode', code.value)
+	if (!code) {
+		uni.showToast({
+			title: '兑换码不能为空',
+		})
+	}
+	api.cdkeyExchange(code).then(
+		(res) => {
+			uni.showToast({
+				title: '兑换成功',
+				icon: 'none',
+			})
+		},
+		(err) => {
+			uni.showToast({
+				title: '兑换失败',
+				icon: 'none',
+			})
+		}
+	)
 }
 </script>
 

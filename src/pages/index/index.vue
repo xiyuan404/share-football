@@ -57,6 +57,19 @@ const handleScan = (e) => {
 	uni.scanCode({
 		success(res) {
 			console.log('scanResult:', res)
+			const stadiumId = res.result.split('=')[1]
+			api.orderCreate({ orderNo: stadiumId }).then((res) => {
+				if (res.data.orderNo) {
+					uni.setStorage({
+						key: 'orderNo',
+						data: res.data.orderNo,
+					})
+					uni.showToast({
+						title: '创建成功',
+						icon: 'none',
+					})
+				}
+			})
 		},
 	})
 }

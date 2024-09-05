@@ -1,5 +1,10 @@
 <script setup>
 import { ref } from 'vue'
+import api from '../../api'
+const app = getApp()
+
+const amount = ref(+app.globalData.userInfo.amount)
+
 const activeIndex = ref(0)
 const amountList = [
 	{ id: 1, amount: 10 },
@@ -12,12 +17,20 @@ const handleItemTap = (index) => {
 }
 
 const handleRecharge = () => {
-	const item = amountList.find((_, index) => index === activeIndex.value)
-	uni.showToast({
-		title: `当前充值金额为${item.amount}`,
-		icon: 'none',
-		mask: true,
-	})
+	const activeItem = amountList.find((_, index) => index === activeIndex.value)
+	api.recharge({ amount: activeItem.amount }).then(
+		(res) => {
+			app.globalData.userInfo.amount = amount.value += activeItem.amount
+			uni.showToast({
+				title: '充值成功',
+			})
+		},
+		(err) => {
+			uni.showToast({
+				title: '充值失败',
+			})
+		}
+	)
 }
 </script>
 
@@ -25,7 +38,7 @@ const handleRecharge = () => {
 	<view class="recharge-box">
 		<view class="recharge-stat">
 			当前账户余额:
-			<text>100.0</text>
+			<text>{{ amount }}</text>
 			元
 		</view>
 		<view class="recharge-list">

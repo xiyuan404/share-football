@@ -1,3 +1,5 @@
+const app = getApp()
+
 class Request {
 
 	constructor(domain) {
@@ -14,6 +16,9 @@ class Request {
 				url: `${this.domain}${path}`,
 				method,
 				data,
+				header: {
+					'Authorization': `Bearer ${app.globalData.token}`
+				},
 				success(res) {
 					if (res.data && !res.data.errCode) {
 						resolve(res.data)
